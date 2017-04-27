@@ -2,7 +2,7 @@ package com.song.redis.service;
 
 import org.springframework.data.redis.core.RedisTemplate;
 
-import com.song.redis.beans.UserBean;
+import com.song.redis.entity.UserBean;
 
 public class UserService {
 

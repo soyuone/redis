@@ -3,7 +3,7 @@ package com.song.redis.test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.song.redis.beans.UserBean;
+import com.song.redis.entity.UserBean;
 import com.song.redis.service.UserService;
 
 public class Main {

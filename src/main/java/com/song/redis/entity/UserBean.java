@@ -1,4 +1,4 @@
-package com.song.redis.beans;
+package com.song.redis.entity;
 
 import java.io.Serializable;
 
