@@ -114,9 +114,6 @@
 				<prop key="hibernate.cache.use_structured_entries">${hibernate.cache.use_structured_entries}</prop>
 				<!-- 设置二级缓存区的实现类 -->
 				<prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
-				<!-- ehcache.xml文件存放位置，http://blog.csdn.net/fengshizty/article/details/43603611 -->
-				<prop key="hibernate.cache.provider_configuration_file_resource_path">${hibernate.cache.provider_configuration_file_resource_path}
-				</prop>
 			</props>
 		</property>
 	</bean>
