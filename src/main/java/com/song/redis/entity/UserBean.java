@@ -8,6 +8,10 @@ public class UserBean implements Serializable {
 
 	public static final String OBJECT_KEY = "USER";
 
+	private String id;
+
+	private String name;
+
 	public UserBean() {
 	}
 
@@ -18,10 +22,6 @@ public class UserBean implements Serializable {
 		this.id = id;
 		this.name = name;
 	}
-
-	private String id;
-
-	private String name;
 
 	public String getId() {
 		return id;

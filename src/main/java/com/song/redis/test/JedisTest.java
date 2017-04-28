@@ -1,6 +1,7 @@
 package com.song.redis.test;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,10 +16,9 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
-import redis.clients.jedis.Transaction;
 
 /**
- * Jedis Api测试 字符串、Set、List、Hash、publish/subscribe
+ * jedis，测试String、Set、List、Hash、publish/subscribe等功能
  */
 public class JedisTest {
 
@@ -27,7 +27,8 @@ public class JedisTest {
 	@Before
 	public void before() {
 		jedis = new Jedis("localhost", 6379);
-		// jedis.auth("");
+		jedis.auth("redisadmin");// password
+		jedis.select(14);// DB
 	}
 
 	@Test
@@ -409,14 +410,14 @@ public class JedisTest {
 	@Test
 	public void testTransaction() {
 		jedis.flushDB();
-//		Transaction transaction = jedis.multi(); // 开始执行事务
-//		transaction.hset("user", "name", "yangxin");
-//		transaction.hset("user", "age", "28");
-//		transaction.hset("user", "sex", "man");
-//		transaction.hset("user", "height", "1.75");
-//		transaction.hset("user", "weight", "65");
-//		List<Object> objects = transaction.exec(); // 执行事务
-//		System.out.println(objects.toString());
+		// Transaction transaction = jedis.multi(); // 开始执行事务
+		// transaction.hset("user", "name", "yangxin");
+		// transaction.hset("user", "age", "28");
+		// transaction.hset("user", "sex", "man");
+		// transaction.hset("user", "height", "1.75");
+		// transaction.hset("user", "weight", "65");
+		// List<Object> objects = transaction.exec(); // 执行事务
+		// System.out.println(objects.toString());
 	}
 
 	/**
@@ -533,6 +534,30 @@ public class JedisTest {
 		// // 将排序结果保存到一个新的列表中（list）
 		// params.asc();
 		// System.out.println(jedis.sort("num", params, "sorted_num"));
+	}
+
+	@Test
+	public void testOther() {
+		jedis.flushDB();// Delete all the keys of the currently selected DB.
+
+		String articleId = String.valueOf(jedis.incr("article:"));
+		System.out.println(articleId);
+		String voted = "voted:" + articleId;
+		jedis.sadd(voted, "username");
+		jedis.expire(voted, 7 * 86400);
+
+		long now = System.currentTimeMillis() / 1000;
+		String article = "article:" + articleId;
+		HashMap<String, String> articleData = new HashMap<String, String>();
+		articleData.put("title", "A title");
+		articleData.put("link", "http://www.google.com");
+		articleData.put("user", "username");
+		articleData.put("now", String.valueOf(now));
+		articleData.put("votes", "1");
+		jedis.hmset(article, articleData);
+		jedis.zadd("score:", now + 432, article);
+		jedis.zadd("time:", now, article);
+
 	}
 
 	@After
